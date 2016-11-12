@@ -6,18 +6,9 @@ import time
 
 import RPi.GPIO as GPIO
 
-# light sensor triggers webcam to take image
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4,GPIO.IN)
-lights = 0;
-
-while True:
-        if GPIO.input(4)== 1:
-                lights = 1
-                os.system('fswebcam --no-banner haikucam.jpg')
-        if GPIO.imput (4)==0:
-                lights = 0
+# timer triggers webcam to take image
+time.sleep (60)
+os.system('fswebcam --no-banner haikucam.jpg')
 
 # save record of image
 #time2 = time.time()
@@ -49,11 +40,11 @@ port = 12345
 s.connect((host, port))
 
 print "waiting for image"
-os.chdir('/home/pi')
+os.chdir('/home/pi/toku')
 
 while True:
         i=1
-        f = open('imageToSave'+ str(i)+".png",'wb')
+        f = open('haiku'+".png",'wb')
         i=i+1
         while (True):
         # receive and write file
