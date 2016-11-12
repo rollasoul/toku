@@ -22,7 +22,6 @@ service docker start
 - pull image for densecap and rnnlib as a package (including trained models and server scripts) from docker-cloud repository:
 ```
 docker pull rollasoul/toku
-
 ```
 
 - run docker image with port forwarding for port 12345
