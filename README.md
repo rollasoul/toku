@@ -4,7 +4,8 @@ Script for handwriting haiku-poems to camera input powered by two neural network
 
 # prerequisites
 - ubuntu 16.04 server running intel xeon processors (or newer) otherwise openBLAS/torch will give you a core dumped error
-- raspberry pi zero or 3, usb camera and adafruit mini-thermal printer
+- raspberry pi zero or 3 running [raspbian jessie 2016-05-31 or older](http://downloads.raspberrypi.org/raspbian/images/) - Pixel is not supported yet
+- usb camera and adafruit mini-thermal printer
 
 # server setup
 
@@ -46,6 +47,21 @@ sudo apt-get install fswebcam
 - check both script_pi and toku_pi_client.py for correct file addresses as they are set up for /home/pi/toku - structure
 
 - follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/networked-thermal-printer-using-cups-and-raspberry-pi/overview)
+
+In case you encounter problems with the printer setup
+
+disable serial-port
+```
+sudo systemctl disable serial-getty@ttyAMA0.service
+```
+remove the reference to tty0 or tty1 in the /boot/cmdline.txt file
+```
+nano /home/pi/boot/cmdline.txt
+```
+and enable_uart=1 in the /boot/config.txt file
+```
+nano /home/pi/boot/config.txt
+```
 
 # hardware setup
 
