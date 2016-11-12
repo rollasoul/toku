@@ -1,11 +1,10 @@
 # T O K U
 
-Script for handwriting haiku-poems to camera input powered by two neural networks (densecap and rnnlib) - and printing them on a mini-thermal printer. Should be run on remote server and local-client, optimised for raspberry-pi. Both networks come ready to go and trained as a docker-image for the server, the git-repo is mainly for the client side (with a few server-scripts as backup). 
+Script for handwriting haiku-poems to camera input powered by two neural networks (densecap and rnnlib) - and printing them on a mini-thermal printer. Should be run on remote server and local-client, optimised for raspberry-pi. Both networks come ready to go and trained as a docker-image for the server, the git-repo is mainly for the client side (with the main server-script as read-me/edit-me backup). 
 
 # prerequisites
 - ubuntu 16.04 server running intel xeon processors (or newer) otherwise openBLAS/torch will give you a core dumped error
-- raspberry pi 3, usb camera, light sensor (or any other trigger you like), adafruit mini-thermal printer and arduino (this script is written for the uno)
-- client (e.g. raspberry pi) has Processing and Arduino IDE installed
+- raspberry pi zero or 3, usb camera and adafruit mini-thermal printer
 
 # server setup
 
@@ -33,17 +32,20 @@ docker run -it -p 12345:12345 rollasoul/toku
 # client setup
 
 - download or clone git-repo on client (raspberry pi or mac)
-- make sure you have [Processing](https://processing.org/) and [Arduino IDE](https://www.arduino.cc/)  installed - otherwise do so:
-  processing for raspbian + arduino IDE for raspbian
 ```
-curl https://processing.org/download/install-arm.sh | sudo sh
-sudo apt-get update && sudo apt-get install arduino
+git clone https://github.com/rollasoul/toku/
 ```
 
-- follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/mini-thermal-receipt-printer/)
-- replace the bitmapimageconvert-files with the git-repo ones
+- download and install fswebcam for the usb-camera
+```
+sudo apt-get install fswebcam
+```
+
 - open the toku_pi_client.py file and replace the server address with the the address of your server (line 29 and 48)
-- check all the files for correct file addresses as they are set up for /home/pi - structure
+
+- check both script_pi and toku_pi_client.py for correct file addresses as they are set up for /home/pi/toku - structure
+
+- follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/networked-thermal-printer-using-cups-and-raspberry-pi/overview)
 
 # hardware setup
 
