@@ -48,21 +48,26 @@ sudo apt-get install fswebcam
 
 - follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/networked-thermal-printer-using-cups-and-raspberry-pi/overview)
 
-In case you encounter problems with the printer setup
+  In case you encounter problems with the printer setup
 
-disable serial-port
-```
-sudo systemctl disable serial-getty@ttyAMA0.service
-```
-remove the reference to tty0 or tty1 in the /boot/cmdline.txt file
-```
-nano /home/pi/boot/cmdline.txt
-```
-and enable_uart=1 in the /boot/config.txt file
-```
-nano /home/pi/boot/config.txt
-```
-
+  disable serial-port for console
+  ```
+  sudo systemctl disable serial-getty@ttyAMA0.service
+  ```
+  remove the reference to tty0 or tty1 in the /boot/cmdline.txt file
+  ```
+  nano /home/pi/boot/cmdline.txt
+  ```
+  and enable_uart=1 in the /boot/config.txt file
+  ```
+  nano /home/pi/boot/config.txt
+  ```
+  that should fix the printer - test it with 
+  ```
+  echo "ready" | lpr
+  ```  
+  Now you can play with the printer settings to get a better haiku (set Gamma to 1, resize the image to 50 %, ...)
+  
 # hardware setup
 
 - check all cables and connections (camera, raspberry pi, arduino, mini-thermal printer)
