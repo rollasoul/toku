@@ -46,9 +46,7 @@ sudo apt-get install fswebcam
 
 - check both script_pi and toku_pi_client.py for correct file addresses as they are set up for /home/pi/toku - structure
 
-- follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/networked-thermal-printer-using-cups-and-raspberry-pi/overview)
-
-  In case you encounter problems with the printer setup
+- follow the installation instructions on adafruit for the [adafruit mini-thermal printer](https://learn.adafruit.com/networked-thermal-printer-using-cups-and-raspberry-pi/overview), in case you encounter problems with the printer setup
 
   disable serial-port for console
   ```
@@ -58,19 +56,19 @@ sudo apt-get install fswebcam
   ```
   nano /home/pi/boot/cmdline.txt
   ```
-  and enable_uart=1 in the /boot/config.txt file
+  enable_uart=1 in the /boot/config.txt file
   ```
   nano /home/pi/boot/config.txt
   ```
-  that should fix the printer - test it with 
+  and make sure the data cables are properly connected, a loose data connection will make the printer print gibberish, now test it with 
   ```
   echo "ready" | lpr
   ```  
-  Now you can play with the printer settings to get a better haiku (set Gamma to 1, resize the image to 50 %, ...)
+ You can play with the printer settings to get a better haiku (set Gamma to 1, resize the image to 50 %)
   
 # hardware setup
 
-- check all cables and connections (camera, raspberry pi, arduino, mini-thermal printer)
+- check all cables and connections (camera, raspberry pi, mini-thermal printer)
 - raspberry pi needs proper wifi-connectivity to run this script
 
 # run toku
@@ -87,6 +85,6 @@ script_pi
 script_pi
 ```
 
-Both scripts are endless loops, the client script waits for a trigger from the GPIO (in our case we use a light-sensor for the signal), the server script for the image of the client. Once the webcam takes the image and sends it off to the server, densecap will generate 83 captions for the image. The script selects captions with 5 and 7 syllables. By random a 5 syllables caption, a 7 syllables caption and a 5 syllable caption will be selected and taken as 3 lines of the haiku. Rnnlib runs each line through its network and predicts a possible handwriting for them. This handwriting is plotted with an Octave-script and an image of the full handwritten haiku gets sent back to the client. Here it is resized and converted to bitmap to fit the mini-thermal printer that is controlled by the arduino. The haiku is then printed in 3 steps - as the arduino uno memory can only handle that much info per time. The whole process takes about 3 minutes, with the server part around 20 seconds, printing up to 3 mins. 
+Both scripts are endless loops, the client script waits for 1 minute after it was started before it takes a picture with the webcam, the server script waits for the image of the client. Once the webcam takes the image and sends it off to the server, densecap will generate 83 captions for the image. The script selects captions with 5 and 7 syllables. By random a 5 syllables caption, a 7 syllables caption and a 5 syllable caption will be selected and taken as 3 lines of the haiku. Rnnlib runs each line through its network and predicts a possible handwriting for them. This handwriting is plotted with an Octave-script and an image of the full handwritten haiku gets sent back to the client and printed on the thermal printer. The whole process takes about 1 minute on a 3.4 GHz/32 GB RAM server. 
 
 And here you go! Your own TOKU handwriting and printing poems about its surroundings.   
