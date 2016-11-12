@@ -1,3 +1,7 @@
+# This is the server script that runs on the docker image. 
+# You don't need to execute it, but you can modify it easier this way.
+# Still don't forget after modifying this script to upload it to the server and commit to the docker image. 
+
 import subprocess
 import socket
 from socket import error as SocketError
