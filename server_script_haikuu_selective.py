@@ -103,21 +103,94 @@ selection_line1 = ['fill']
 selection_line2 = ['fill']
 selection_line3 = ['fill']
 
-# randomise selection per syllable selection
-while selection_line1[0] == selection_line3[0]:
+# load the pretrained neural net for checking the haiku-lines
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+# create storage for checking nouns
+check_noun = ['noun', 'noun', 'noun']
+check_verb = []
+print "selecting haiku lines"
+
+# randomise selection per syllable selection and avoid repetition in words
+while len(check_noun) != len(set(check_noun)):
+    check_noun = []
+    check_verb = []
     selection_line1 = syllables5 [randint(0,(len(syllables5) -1) /2)]
     selection_line2 = syllables7 [randint(0,(len(syllables7)-1))]
     selection_line3 = syllables5 [randint(len(syllables5)/2,(len(syllables5)-1))]
+    # create strings for further language processing
+    selection_line1 = ''.join(selection_line1)
+    selection_line2 = ''.join(selection_line2)
+    selection_line2 = ''.join(selection_line2)
 
-# return the result
-print "haiku:"
+    # tokenize the text
+    tokenized = tokenizer.tokenize(selection_line1)
+    words1 = word_tokenize(selection_line1)
+
+    tokenized = tokenizer.tokenize(selection_line2)
+    words2 = word_tokenize(selection_line2)
+
+    tokenized = tokenizer.tokenize(selection_line3)
+    words3 = word_tokenize(selection_line3)
+
+    # identify the parts of speech
+    tagged1 = nltk.pos_tag(words1)
+    tagged2 = nltk.pos_tag(words2)
+    tagged3 = nltk.pos_tag(words3)
+
+
+    for i in range(0,len(words1)):
+        # find noun in line1 and store it
+        if tagged1[i][1] == 'NN':
+                check_noun.append(tagged1[i])
+        if tagged1[i][1] == 'NNS':
+                check_noun.append(tagged1[i])       
+        if tagged1[i][1] == 'VBG':
+                check_verb.append(tagged1[i])
+        if tagged1[i][1] == 'VBZ':
+                check_verb.append(tagged1[i])
+
+    for i in range(0,len(words2)):
+        # find noun in line2 and store it
+        if tagged2[i][1] == 'NN':
+                check_noun.append(tagged2[i])
+        if tagged2[i][1] == 'NNS':
+                check_noun.append(tagged2[i])        
+        if tagged2[i][1] == 'VBG':
+                check_verb.append(tagged1[i])
+        if tagged2[i][1] == 'VBZ':
+                check_verb.append(tagged1[i])
+
+    for i in range(0,len(words3)):
+        # find noun in line2 and store it
+        if tagged3[i][1] == 'NN':
+                check_noun.append(tagged3[i])
+        if tagged3[i][1] == 'NNS':
+                check_noun.append(tagged3[i])
+        if tagged3[i][1] == 'VBG':
+                check_verb.append(tagged1[i])
+        if tagged3[i][1] == 'VBZ':
+                check_verb.append(tagged1[i])
+
+    # check for existing lines with verbs 
+    if not check_verb:
+        check_noun = ['noun', 'noun', 'noun']
+
+    # check for repetitions at the beginning of lines
+    if words1[0] == words2[0] or words2[0] == words3[0]:
+        check_noun = ['noun', 'noun', 'noun']
+
+    word_check = selection_line1 + " " + selection_line2 + " " + selection_line3
+    #print word_check
+    # check for word "background" which messes up rnnlib
+    if "background" in word_check:
+        check_noun = ['noun', 'noun', 'noun']
+
+# return the checked lines
+print "haiku-lines selected:"
 print (selection_line1)
 print (selection_line2) 
 print (selection_line3)
-selection_line1 = ''.join(selection_line1)
-selection_line2 = ''.join(selection_line2)
-selection_line2 = ''.join(selection_line2)
-
 
 # create lines
 print "creating handwritten lines"
