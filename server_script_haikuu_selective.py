@@ -140,7 +140,7 @@ while len(check_noun) != len(set(check_noun)):
 
 
     for i in range(0,len(words1)):
-        # find noun in line1 and store it
+        # find nouns and verbs in line1 and store them
         if tagged1[i][1] == 'NN':
                 check_noun.append(tagged1[i])
         if tagged1[i][1] == 'NNS':
@@ -151,7 +151,7 @@ while len(check_noun) != len(set(check_noun)):
                 check_verb.append(tagged1[i])
 
     for i in range(0,len(words2)):
-        # find noun in line2 and store it
+        # find nouns and verbs in line2 and store them
         if tagged2[i][1] == 'NN':
                 check_noun.append(tagged2[i])
         if tagged2[i][1] == 'NNS':
@@ -162,7 +162,7 @@ while len(check_noun) != len(set(check_noun)):
                 check_verb.append(tagged1[i])
 
     for i in range(0,len(words3)):
-        # find noun in line2 and store it
+        # find nouns and verbs in line1 and store them
         if tagged3[i][1] == 'NN':
                 check_noun.append(tagged3[i])
         if tagged3[i][1] == 'NNS':
