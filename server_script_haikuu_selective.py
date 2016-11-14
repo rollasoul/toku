@@ -310,15 +310,13 @@ angle = 270
 rotate = src_im.rotate( angle, expand=1 )
 rotated = rotate.save("imageToSave.png")
 print ("rotation finished")
-
-# send image back to client
-
 print "haiku handwriting (as image) generated"
 
-s.listen(5)                 # Now wait for client connection.
+# send image back to client
+s.listen(5)                
 print 'listening on port 12345'
 while True:
-   c, addr = s.accept()     # Establish connection with client.
+   c, addr = s.accept()    
    print 'Got connection from', addr
    f=open ("/root/rnnlib/examples/online_prediction/imageToSave.png", "rb") 
    l = f.read(4096)
@@ -331,6 +329,7 @@ while True:
       if "file received" in i: 
    	 time.sleep(3)
          print "haiku received by client, closing connection"
-         c.close()                # Close the connection
+	 # Close the connection
+         c.close()              
 	 break
    break
